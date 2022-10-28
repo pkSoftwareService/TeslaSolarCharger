@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using TeslaSolarCharger.Server.Contracts;
 using TeslaSolarCharger.Server.Resources;
 using TeslaSolarCharger.Shared.Contracts;
@@ -107,9 +107,6 @@ public class ChargingService : IChargingService
             }
         }
 
-        _logger.LogDebug("At least one car is charging.");
-        _settings.ControlledACarAtLastCycle = true;
-        
         _logger.LogDebug("Power to control: {power}", powerToControl);
 
         if (powerToControl < 0)
@@ -123,7 +120,15 @@ public class ChargingService : IChargingService
             var ampToControl = Convert.ToInt32(Math.Floor(powerToControl / ((double)230 * (relevantCar.CarState.ActualPhases ?? 3))));
             _logger.LogDebug("Amp to control: {amp}", ampToControl);
             _logger.LogDebug("Update Car amp for car {carname}", relevantCar.CarState.Name);
-            powerToControl -= await ChangeCarAmp(relevantCar, ampToControl).ConfigureAwait(false);
+            var actualCurrentBeforeAmpChange = relevantCar.CarState.ChargerActualCurrent;
+            var powerDifference = await ChangeCarAmp(relevantCar, ampToControl).ConfigureAwait(false);
+            powerToControl -= powerDifference;
+
+            if (powerDifference != 0 || actualCurrentBeforeAmpChange > 0)
+            {
+                _logger.LogDebug("At least one car is charging.");
+                _settings.ControlledACarAtLastCycle = true;
+            }
         }
     }
 
