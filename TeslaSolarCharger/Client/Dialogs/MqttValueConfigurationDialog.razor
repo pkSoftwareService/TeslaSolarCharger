@@ -78,7 +78,10 @@ else
                                                 <MudSelectItemGroupExtended T="ValueUsage" Text="Solar" Nested="true" InitiallyExpanded="false">
                                                     @foreach (ValueUsage item in Enum.GetValues(typeof(ValueUsage)))
                                                     {
-                                                        <MudSelectItemExtended T="ValueUsage" Value="@item">@StringHelper.GenerateFriendlyStringFromPascalString(item.ToString())</MudSelectItemExtended>
+                                                        @if (item <= ValueUsage.HomeBatterySoc)
+                                                        {
+                                                            <MudSelectItemExtended T="ValueUsage" Value="@item">@StringHelper.GenerateFriendlyStringFromPascalString(item.ToString())</MudSelectItemExtended>
+                                                        }
                                                     }
                                                 </MudSelectItemGroupExtended>
                                             </MudSelectExtended>

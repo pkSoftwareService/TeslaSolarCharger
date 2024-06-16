@@ -6,4 +6,8 @@ public enum ValueUsage
     GridPower,
     HomeBatteryPower,
     HomeBatterySoc,
+    CarLongitude = 100,
+    CarLatitude = 101,
+    CarBatteryLevel = 102,
+    CarBatteryLevelLimit = 103,
 }

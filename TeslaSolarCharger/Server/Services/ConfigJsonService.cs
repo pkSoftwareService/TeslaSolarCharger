@@ -10,10 +10,8 @@ using TeslaSolarCharger.Shared.Contracts;
 using TeslaSolarCharger.Shared.Dtos.Contracts;
 using TeslaSolarCharger.Shared.Dtos.Settings;
 using TeslaSolarCharger.Shared.Resources.Contracts;
-using TeslaSolarCharger.SharedBackend.Contracts;
 using TeslaSolarCharger.Shared.Dtos;
 using TeslaSolarCharger.Shared.Dtos.IndexRazor.CarValues;
-using TeslaSolarCharger.Model.EntityFramework;
 using TeslaSolarCharger.SharedBackend.MappingExtensions;
 
 [assembly: InternalsVisibleTo("TeslaSolarCharger.Tests")]
